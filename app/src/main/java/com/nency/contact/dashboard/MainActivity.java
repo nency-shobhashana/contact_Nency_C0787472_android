@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                 // filter data based on search query text
                 filterContacts.clear();
                 for (Contact contact : contacts) {
-                    if (contact.getFirstName().contains(newText)
-                            || contact.getLastName().contains(newText)) {
+                    if (contact.getFirstName().toLowerCase().contains(newText.toLowerCase())
+                            || contact.getLastName().toLowerCase().contains(newText.toLowerCase())) {
                         filterContacts.add(contact);
                     }
                 }

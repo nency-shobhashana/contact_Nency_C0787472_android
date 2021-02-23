@@ -42,6 +42,11 @@ public class ContactDetailActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         address = findViewById(R.id.address);
 
+        btnCancel = findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(v -> {
+            finish();
+        });
+
         btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
             if (contactId < 0) {

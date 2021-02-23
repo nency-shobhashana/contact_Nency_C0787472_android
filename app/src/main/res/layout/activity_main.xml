@@ -16,7 +16,7 @@
         android:id="@+id/totalContact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:text="Total contact is "
         android:textAlignment="center"
         android:textColor="#3F51B5"
@@ -32,17 +32,21 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="60dp"
+        android:clipToPadding="false"
         />
 
 
 </LinearLayout>
+
     <Button
         android:id="@+id/addNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        android:layout_marginBottom="16dp"
         android:text="Add new Contact"
-        app:backgroundTint="#2196F3"
+        app:backgroundTint="#4CAF50"
         app:rippleColor="#FFFFFF"
         app:srcCompat="@drawable/ic_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

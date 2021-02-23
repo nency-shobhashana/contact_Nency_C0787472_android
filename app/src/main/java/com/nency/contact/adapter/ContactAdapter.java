@@ -27,12 +27,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         int id;
-        TextView firstName, lastName, number;
+        TextView firstName, number;
         public ViewHolder(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
 
             firstName = itemView.findViewById(R.id.firstName);
-            lastName = itemView.findViewById(R.id.lastName);
+
             number = itemView.findViewById(R.id.number);
             // remove item listener
             itemView.findViewById(R.id.btnDelete).setOnClickListener(v -> onItemClickListener.onItemRemovedClicked(id));
@@ -56,8 +56,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     public void onBindViewHolder(@NonNull ContactAdapter.ViewHolder holder, int position) {
         Contact contact = contacts.get(position);
         holder.id = contact.getId();
-        holder.firstName.setText(contact.getFirstName());
-        holder.lastName.setText(contact.getLastName());
+        holder.firstName.setText(contact.getFirstName() + " " + contact.getLastName());
         holder.number.setText(contact.getPhoneNumber());
     }
 

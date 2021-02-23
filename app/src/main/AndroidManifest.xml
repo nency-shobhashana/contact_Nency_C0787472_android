@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Contact_Nency_C0787472_android">
         <activity android:name=".detail.ContactDetailActivity"></activity>
-        <activity android:name=".detail.ContactDetail" />
         <activity android:name=".dashboard.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

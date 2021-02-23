@@ -34,8 +34,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
             firstName = itemView.findViewById(R.id.firstName);
             lastName = itemView.findViewById(R.id.lastName);
             number = itemView.findViewById(R.id.number);
-
+            // remove item listener
+            itemView.findViewById(R.id.btnDelete).setOnClickListener(v -> onItemClickListener.onItemRemovedClicked(id));
+            // contact click listener
             itemView.setOnClickListener(v -> onItemClickListener.onItemClick(id));
+            //contact long press listener
+            itemView.setOnLongClickListener(v -> {onItemClickListener.onItemLongClick(id); return true;});
         }
     }
 

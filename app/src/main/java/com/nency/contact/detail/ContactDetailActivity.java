@@ -43,14 +43,11 @@ public class ContactDetailActivity extends AppCompatActivity {
         address = findViewById(R.id.address);
 
         btnSave = findViewById(R.id.btnSave);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (contactId < 0) {
-                    addContact();
-                } else {
-                    updateContact();
-                }
+        btnSave.setOnClickListener(v -> {
+            if (contactId < 0) {
+                addContact();
+            } else {
+                updateContact();
             }
         });
 

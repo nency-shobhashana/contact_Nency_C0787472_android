@@ -1,19 +1,16 @@
 package com.nency.contact.dashboard;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.nency.contact.R;
 import com.nency.contact.adapter.ContactAdapter;
@@ -21,7 +18,6 @@ import com.nency.contact.detail.ContactDetailActivity;
 import com.nency.contact.room.Contact;
 import com.nency.contact.room.ContactRoomDatabase;
 
-import java.nio.channels.Channel;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnItemClickListener {
@@ -57,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         });
 
         // Room db
-        contactRoomDatabase = contactRoomDatabase.getInstance(this);
+        contactRoomDatabase = ContactRoomDatabase.getInstance(this);
 
         // search view
         SearchView searchView = findViewById(R.id.searchContacts);
@@ -73,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                 // filter data based on search query text
                 filterContacts.clear();
                 for (Contact contact : contacts) {
-                    if(contact.getFirstName().contains(newText)
-                    || contact.getLastName().contains(newText)){
+                    if (contact.getFirstName().contains(newText)
+                            || contact.getLastName().contains(newText)) {
                         filterContacts.add(contact);
                     }
                 }
@@ -106,17 +102,27 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         startActivity(i);
     }
 
+    // Remove contact
     @Override
     public void onItemRemovedClicked(int id) {
-        contactRoomDatabase.ContactDao().deleteContact(id);
-        loadContacts();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Are you sure?");
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            contactRoomDatabase.ContactDao().deleteContact(id);
+            loadContacts();
+        });
+        builder.setNegativeButton("No", null);
+        builder.create().show();
+
     }
 
+
+    // OnLong Press Action
     @Override
     public void onItemLongClick(int id) {
         for (Contact contact : contacts) {
-            if(contact.getId() == id){
-                selectOption(contact.getPhoneNumber(),contact.getEmail());
+            if (contact.getId() == id) {
+                selectOption(contact.getPhoneNumber(), contact.getEmail());
                 break;
             }
         }
@@ -124,12 +130,11 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
     private void selectOption(String phone, String email) {
         ArrayList<CharSequence> options = new ArrayList<>();
-        if(phone != null )
-        {
+        if (phone != null) {
             options.add("Call");
             options.add("Message");
         }
-        if(email != null){
+        if (email != null) {
             options.add("Email");
         }
         options.add("Cancel");
@@ -142,19 +147,19 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         builder.setItems(finalOption, (dialog, item) -> {
 
             if (finalOption[item].equals("Call")) {
-                String tel = "tel:"+ phone;
+                String tel = "tel:" + phone;
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(tel));
                 MainActivity.this.startActivity(intent);
 
             } else if (finalOption[item].equals("Message")) {
-                String sms = "sms:"+ phone;
+                String sms = "sms:" + phone;
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(sms));
                 MainActivity.this.startActivity(intent);
 
             } else if (finalOption[item].equals("Email")) {
-                String mail = "mailto:"+ email;
+                String mail = "mailto:" + email;
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse(mail));
                 intent.putExtra(Intent.EXTRA_EMAIL, email);

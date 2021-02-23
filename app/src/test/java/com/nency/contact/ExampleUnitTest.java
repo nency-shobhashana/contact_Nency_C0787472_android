@@ -1,4 +1,4 @@
-package com.nency.contact_nency_c0787472_android;
+package com.nency.contact;
 
 import org.junit.Test;
 

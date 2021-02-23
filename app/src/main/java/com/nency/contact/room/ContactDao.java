@@ -9,19 +9,19 @@ import java.util.List;
 @Dao
 public interface ContactDao {
     @Insert
-    void insertNote(Contact note);
+    void insertContact(Contact note);
 
     @Query("DELETE FROM contact")
-    void deleteAllNotes();
+    void deleteAllContact();
 
     @Query("DELETE FROM contact WHERE id = :id")
-    void deleteNote(int id);
+    void deleteContact(int id);
 
     @Query("UPDATE contact SET firstName = :firstName, lastName = :lastName, email = :email, phoneNumber = :phoneNumber, address = :address where id == :id")
-    void updateNote(int id, String firstName, String lastName, String email, int phoneNumber, String address);
+    void updateContact(int id, String firstName, String lastName, String email, String phoneNumber, String address);
 
     @Query("SELECT * FROM contact ORDER BY firstName")
-    List<Contact> getAllNotes();
+    List<Contact> getAllContact();
 
     @Query("SELECT * FROM contact where id == :id")
     Contact getNote(int id);

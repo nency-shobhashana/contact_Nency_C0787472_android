@@ -9,21 +9,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nency.contact.R;
 import com.nency.contact.adapter.ContactAdapter;
 import com.nency.contact.detail.ContactDetailActivity;
 import com.nency.contact.room.Contact;
+import com.nency.contact.room.ContactRoomDatabase;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnItemClickListener {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager layoutManager;
 
     ArrayList<Contact> contacts = new ArrayList();
+
+    private ContactRoomDatabase contactRoomDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        myAdapter = new ContactAdapter(this, contacts);
+        myAdapter = new ContactAdapter(contacts, this);
         recyclerView.setAdapter(myAdapter);
 
         Button addNew = findViewById(R.id.addNew);
@@ -49,5 +51,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Room db
+        contactRoomDatabase = contactRoomDatabase.getInstance(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadContacts();
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    private void loadContacts() {
+        contacts.clear();
+        contacts.addAll(contactRoomDatabase.ContactDao().getAllContact());
+    }
+
+    @Override
+    public void onItemClick(int id) {
+        Intent i = new Intent(this, ContactDetailActivity.class);
+        i.putExtra("ContactId", id);
+        startActivity(i);
     }
 }
+
+
+
+
+

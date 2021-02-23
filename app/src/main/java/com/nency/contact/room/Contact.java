@@ -24,12 +24,12 @@ public class Contact {
 
     @NonNull
     @ColumnInfo(name = "phoneNumber")
-    private int phoneNumber;
+    private String phoneNumber;
 
     @ColumnInfo(name = "address")
     private String address;
 
-    public Contact(@NonNull String firstName, @NonNull String lastName, String email, @NonNull int phoneNumber, String address) {
+    public Contact(@NonNull String firstName, @NonNull String lastName, String email, @NonNull String phoneNumber, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -72,11 +72,11 @@ public class Contact {
     }
 
     @NonNull
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(@NonNull int phoneNumber) {
+    public void setPhoneNumber(@NonNull String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
